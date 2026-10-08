@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Download, Menu, X } from 'lucide-react';
 
 export default function Navbar({ onOpenResume }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
+  const navListRef = useRef(null);
 
   const navItems = [
     { label: 'Home', href: '#home', id: 'home' },
@@ -20,13 +22,16 @@ export default function Navbar({ onOpenResume }) {
 
       // Scroll spy for active section
       const sections = navItems.map((item) => document.getElementById(item.id));
-      const scrollPosition = window.scrollY + 120;
+      const scrollPosition = window.scrollY + 150;
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
-        if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(navItems[i].id);
-          break;
+        if (section) {
+          const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+          if (sectionTop <= scrollPosition) {
+            setActiveSection(navItems[i].id);
+            break;
+          }
         }
       }
     };
@@ -35,9 +40,31 @@ export default function Navbar({ onOpenResume }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = (e, href) => {
+  useEffect(() => {
+    const updateIndicator = () => {
+      if (navListRef.current) {
+        const activeElement = navListRef.current.querySelector('.nav-link.active');
+        if (activeElement) {
+          // Calculate offset relative to the nav list
+          setIndicatorStyle({
+            left: activeElement.offsetLeft + 4, // to account for 4px padding in nav-link
+            width: activeElement.offsetWidth - 8,
+            opacity: 1,
+          });
+        }
+      }
+    };
+
+    // Small delay to ensure layout is computed
+    setTimeout(updateIndicator, 50);
+    window.addEventListener('resize', updateIndicator);
+    return () => window.removeEventListener('resize', updateIndicator);
+  }, [activeSection, isScrolled]);
+
+  const handleNavClick = (e, href, id) => {
     e.preventDefault();
     setMobileMenuOpen(false);
+    if (id) setActiveSection(id);
     const targetElement = document.querySelector(href);
     if (targetElement) {
       const topOffset = targetElement.getBoundingClientRect().top + window.scrollY - 75;
@@ -59,7 +86,8 @@ export default function Navbar({ onOpenResume }) {
 
           {/* Desktop Navigation Links */}
           <nav className="desktop-nav" aria-label="Main Navigation">
-            <ul className="nav-list">
+            <ul className="nav-list" ref={navListRef}>
+              <div className="sliding-pill" style={{ left: indicatorStyle.left, width: indicatorStyle.width, opacity: indicatorStyle.opacity }} />
               {navItems.map((item) => {
                 const isActive = activeSection === item.id;
                 return (
@@ -67,10 +95,9 @@ export default function Navbar({ onOpenResume }) {
                     <a
                       href={item.href}
                       className={`nav-link ${isActive ? 'active' : ''}`}
-                      onClick={(e) => handleNavClick(e, item.href)}
+                      onClick={(e) => handleNavClick(e, item.href, item.id)}
                     >
                       {item.label}
-                      {isActive && <span className="active-pill" />}
                     </a>
                   </li>
                 );
@@ -205,6 +232,7 @@ export default function Navbar({ onOpenResume }) {
         }
 
         .nav-list {
+          position: relative;
           display: flex;
           align-items: center;
           gap: 32px;
@@ -236,20 +264,15 @@ export default function Navbar({ onOpenResume }) {
           font-weight: 600;
         }
 
-        .active-pill {
+        .sliding-pill {
           position: absolute;
           bottom: 0px;
-          left: 4px;
-          right: 4px;
           height: 2.5px;
           background: var(--primary-blue);
           border-radius: 99px;
-          animation: pillFadeIn 0.25s ease-out forwards;
-        }
-
-        @keyframes pillFadeIn {
-          from { transform: scaleX(0); opacity: 0; }
-          to { transform: scaleX(1); opacity: 1; }
+          transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+          pointer-events: none;
+          z-index: 10;
         }
 
         .navbar-action {
