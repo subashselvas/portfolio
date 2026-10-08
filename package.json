@@ -1,0 +1,13 @@
+{
+  "name": "subash-portfolio-root",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Subash S - Personal Portfolio Website",
+  "scripts": {
+    "dev": "npm --prefix portfolio run dev",
+    "build": "npm --prefix portfolio run build",
+    "preview": "npm --prefix portfolio run preview",
+    "install:all": "npm --prefix portfolio install",
+    "postinstall": "npm --prefix portfolio install"
+  }
+}
