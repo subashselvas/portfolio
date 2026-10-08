@@ -6,7 +6,16 @@ import subashPortrait from '../assets/subash-portrait.jpg';
 export default function Hero({ onOpenResume }) {
   const [roleText, setRoleText] = useState('Software Developer');
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
+  const [activeCard, setActiveCard] = useState(0);
   const heroRef = useRef(null);
+
+  // Carousel auto-slide
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveCard(prev => (prev + 1) % 5);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, []);
 
   // Dynamic typing / switching roles
   useEffect(() => {
@@ -215,89 +224,61 @@ export default function Hero({ onOpenResume }) {
           </div>
         </div>
 
-        {/* ================= RIGHT: Floating 3D Portfolio Cards ================= */}
+        {/* ================= RIGHT: Floating 3D Portfolio Carousel ================= */}
         <div
           className="hero-cards-column"
           style={{
-            transform: `perspective(1200px) rotateY(${ -12 + mouseOffset.x * 6}deg) rotateX(${ 7 - mouseOffset.y * 6}deg) translateZ(0)`,
+            transform: `perspective(1200px) rotateY(${ -10 + mouseOffset.x * 12}deg) rotateX(${ 5 - mouseOffset.y * 12}deg) translateZ(0)`,
           }}
         >
-          <div className="fanned-cards-stack">
-            {/* Card 4: Backmost - My Portfolio Preview */}
-            <div className="stacked-preview-card card-depth-4">
-              <div className="card-mini-header">
-                <span className="card-mini-title">My Portfolio</span>
-                <span className="card-mini-dot" />
-              </div>
-              <div className="card-mini-grid">
-                <div className="mini-thumb thumb-greenhouse" />
-                <div className="mini-thumb thumb-cropplanner" />
-                <div className="mini-thumb thumb-apisecurity" />
-                <div className="mini-thumb thumb-dashboard" />
-              </div>
-            </div>
+          <div className="carousel-3d-container">
+            {[
+              { id: 'home', title: 'Home', subtitle: 'Software Developer' },
+              { id: 'about', title: 'About Me', subtitle: '4th Yr CS & Cyber Sec' },
+              { id: 'skills', title: 'Skills', subtitle: 'React, Java, Python' },
+              { id: 'portfolio', title: 'Portfolio', subtitle: '3D UI, Web, IoT' },
+              { id: 'contact', title: 'Contact', subtitle: 'Available for Hire' }
+            ].map((card, idx) => {
+              let offset = (idx - activeCard) % 5;
+              if (offset < -2) offset += 5;
+              if (offset > 2) offset -= 5;
+              
+              const isFront = offset === 0;
+              const opacity = 1 - Math.abs(offset) * 0.25;
+              const scale = 1 - Math.abs(offset) * 0.1;
+              const translateX = offset * 55;
+              const translateZ = Math.abs(offset) * -80;
+              const rotateY = offset * -15;
 
-            {/* Card 3: Skills Preview */}
-            <div className="stacked-preview-card card-depth-3">
-              <div className="card-mini-header">
-                <span className="card-mini-title">Technical Skills</span>
-              </div>
-              <div className="mini-skills-tags">
-                <span className="mini-tag">Java</span>
-                <span className="mini-tag">Python</span>
-                <span className="mini-tag">React</span>
-                <span className="mini-tag">SQL</span>
-                <span className="mini-tag">Cyber Security</span>
-                <span className="mini-tag">Network Sec</span>
-              </div>
-            </div>
-
-            {/* Card 2: About Me Preview */}
-            <div className="stacked-preview-card card-depth-2">
-              <div className="card-mini-header">
-                <span className="card-mini-title">About Subash</span>
-              </div>
-              <div className="card-mini-body">
-                <div className="mini-avatar-row">
-                  <img src={subashPortrait} alt="Subash mini" className="mini-avatar-img" />
-                  <div>
-                    <strong className="mini-avatar-name">Subash S</strong>
-                    <div className="mini-avatar-sub">B.E. CS & Cyber Security</div>
+              return (
+                <div 
+                  key={card.id}
+                  className={`carousel-card ${isFront ? 'active-card' : ''}`}
+                  style={{
+                    transform: `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
+                    opacity: opacity,
+                    zIndex: 10 - Math.abs(offset)
+                  }}
+                  onClick={() => setActiveCard(idx)}
+                >
+                  <div className="carousel-card-inner">
+                     <div className="carousel-card-header">
+                       <span className="card-brand">Port<strong>folio</strong></span>
+                       <span className="card-badge">{card.title}</span>
+                     </div>
+                     <div className="carousel-card-body">
+                        <div className="card-avatar-wrap">
+                          <img src={subashPortrait} alt="Subash" className="card-avatar" />
+                        </div>
+                        <div className="card-text">
+                           <h4>Subash S</h4>
+                           <p>{card.subtitle}</p>
+                        </div>
+                     </div>
                   </div>
                 </div>
-                <div className="mini-stat-pills">
-                  <span className="mini-pill">CGPA: 8.1</span>
-                  <span className="mini-pill">4th Year</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Card 1: Frontmost Hero Preview Card matching reference */}
-            <div className="stacked-preview-card card-depth-1">
-              <div className="card-mini-navbar">
-                <span className="card-mini-brand">Port<strong>folio</strong></span>
-                <div className="card-mini-navlinks">
-                  <span>Home</span>
-                  <span>About</span>
-                  <span>Skills</span>
-                </div>
-              </div>
-              <div className="card-front-content">
-                <div className="card-front-avatar-wrap">
-                  <img src={subashPortrait} alt="Subash front" className="card-front-avatar" />
-                </div>
-                <div className="card-front-text">
-                  <span className="card-front-hello">Hello, I'm</span>
-                  <h4 className="card-front-name">Subash S</h4>
-                  <div className="card-front-role">Software Developer</div>
-                  <div className="card-front-icons">
-                    <span className="mini-icon-circle" />
-                    <span className="mini-icon-circle" />
-                    <span className="mini-icon-circle" />
-                  </div>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -618,280 +599,121 @@ export default function Hero({ onOpenResume }) {
           font-size: 0.98rem;
         }
 
-        /* ================= RIGHT 3D FLOATING CARDS ================= */
+        /* ================= RIGHT 3D FLOATING CAROUSEL ================= */
         .hero-cards-column {
           position: relative;
           display: flex;
           justify-content: center;
           align-items: center;
           transform-style: preserve-3d;
-          transition: transform 0.12s ease-out;
+          transition: transform 0.15s ease-out;
           will-change: transform;
         }
 
-        .fanned-cards-stack {
+        .carousel-3d-container {
           position: relative;
           width: 320px;
           height: 380px;
           transform-style: preserve-3d;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
-        .stacked-preview-card {
+        .carousel-card {
           position: absolute;
+          width: 290px;
           background: #ffffff;
           border-radius: var(--radius-lg);
           border: 1px solid rgba(226, 232, 240, 0.9);
-          box-shadow: var(--shadow-3d);
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+          transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
           overflow: hidden;
-          backface-visibility: hidden;
+          cursor: pointer;
+          user-select: none;
         }
 
-        /* Layer Depth & Rotations matching reference */
-        .card-depth-4 {
-          top: 0px;
-          right: -30px;
-          width: 250px;
-          height: 290px;
-          transform: translateZ(-90px) rotate(-6deg) scale(0.88);
-          opacity: 0.75;
-          padding: 16px;
-          z-index: 1;
-        }
-
-        .card-depth-3 {
-          top: 15px;
-          right: -10px;
-          width: 260px;
-          height: 300px;
-          transform: translateZ(-60px) rotate(-3deg) scale(0.92);
-          opacity: 0.85;
-          padding: 18px;
-          z-index: 2;
-        }
-
-        .card-depth-2 {
-          top: 35px;
-          right: 15px;
-          width: 275px;
-          height: 310px;
-          transform: translateZ(-30px) rotate(-1deg) scale(0.96);
-          opacity: 0.95;
-          padding: 20px;
-          z-index: 3;
-        }
-
-        .card-depth-1 {
-          top: 55px;
-          left: -15px;
-          width: 305px;
-          height: 315px;
-          transform: translateZ(0px) rotate(2deg);
-          opacity: 1;
-          padding: 22px;
-          z-index: 4;
-          box-shadow: -18px 30px 50px rgba(15, 23, 42, 0.12), 0 10px 25px rgba(37, 99, 235, 0.08);
+        .carousel-card.active-card {
           border: 1px solid rgba(191, 219, 254, 0.8);
+          box-shadow: -18px 30px 50px rgba(15, 23, 42, 0.12), 0 10px 25px rgba(37, 99, 235, 0.08);
         }
 
-        /* Card Content Details */
-        .card-mini-header {
+        .carousel-card-inner {
+          padding: 22px;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .carousel-card-header {
           display: flex;
           align-items: center;
           justify-content: space-between;
           padding-bottom: 12px;
           border-bottom: 1px solid #f1f5f9;
-          margin-bottom: 14px;
         }
 
-        .card-mini-title {
-          font-size: 0.85rem;
-          font-weight: 700;
+        .card-brand {
+          font-size: 0.9rem;
+          font-weight: 800;
           color: var(--navy-heading);
         }
 
-        .card-mini-dot {
-          width: 6px;
-          height: 6px;
-          border-radius: 50%;
-          background: var(--primary-blue);
+        .card-brand strong {
+          color: var(--primary-blue);
         }
 
-        .card-mini-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 10px;
-        }
-
-        .mini-thumb {
-          height: 85px;
-          border-radius: 8px;
-          background: #eff6ff;
-          border: 1px solid #dbeafe;
-        }
-
-        .thumb-greenhouse { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
-        .thumb-cropplanner { background: linear-gradient(135deg, #e0f2fe, #bae6fd); }
-        .thumb-apisecurity { background: linear-gradient(135deg, #ede9fe, #dbeafe); }
-        .thumb-dashboard { background: linear-gradient(135deg, #f0f9ff, #e0f2fe); }
-
-        .mini-skills-tags {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 6px;
-        }
-
-        .mini-tag {
-          font-size: 0.72rem;
-          font-weight: 600;
-          padding: 5px 10px;
+        .card-badge {
+          font-size: 0.75rem;
+          font-weight: 700;
+          padding: 4px 10px;
           background: #eff6ff;
           color: var(--primary-blue);
           border-radius: 99px;
           border: 1px solid #dbeafe;
         }
 
-        .mini-avatar-row {
+        .carousel-card-body {
           display: flex;
           align-items: center;
-          gap: 12px;
-          margin-bottom: 14px;
+          gap: 16px;
         }
 
-        .mini-avatar-img {
-          width: 44px;
-          height: 44px;
-          border-radius: 50%;
-          object-fit: cover;
-          border: 2px solid var(--primary-blue);
-        }
-
-        .mini-avatar-name {
-          font-size: 0.85rem;
-          color: var(--navy-heading);
-          display: block;
-        }
-
-        .mini-avatar-sub {
-          font-size: 0.72rem;
-          color: var(--text-muted);
-        }
-
-        .mini-stat-pills {
-          display: flex;
-          gap: 8px;
-        }
-
-        .mini-pill {
-          font-size: 0.75rem;
-          font-weight: 700;
-          padding: 4px 10px;
-          background: #f1f5f9;
-          border-radius: 6px;
-          color: var(--navy-heading);
-        }
-
-        /* Frontmost Card styling matching reference */
-        .card-mini-navbar {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding-bottom: 14px;
-          border-bottom: 1px solid #f1f5f9;
-          margin-bottom: 18px;
-        }
-
-        .card-mini-brand {
-          font-size: 0.85rem;
-          font-weight: 800;
-          color: var(--navy-heading);
-        }
-
-        .card-mini-brand strong {
-          color: var(--primary-blue);
-        }
-
-        .card-mini-navlinks {
-          display: flex;
-          gap: 8px;
-          font-size: 0.68rem;
-          font-weight: 600;
-          color: var(--text-muted);
-        }
-
-        .card-front-content {
-          display: flex;
-          align-items: center;
-          gap: 18px;
-        }
-
-        .card-front-avatar-wrap {
-          width: 72px;
-          height: 72px;
+        .card-avatar-wrap {
+          width: 60px;
+          height: 60px;
           border-radius: 50%;
           overflow: hidden;
           background: linear-gradient(135deg, #dbeafe, #93c5fd);
-          border: 3px solid #ffffff;
-          box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
+          border: 2px solid #ffffff;
+          box-shadow: 0 4px 10px rgba(37, 99, 235, 0.15);
           flex-shrink: 0;
         }
 
-        .card-front-avatar {
+        .card-avatar {
           width: 100%;
           height: 100%;
           object-fit: cover;
           object-position: center 15%;
         }
 
-        .card-front-text {
-          flex: 1;
+        .card-text h4 {
+          font-size: 1.1rem;
+          font-weight: 800;
+          color: var(--navy-heading);
+          margin-bottom: 4px;
         }
 
-        .card-front-hello {
-          font-size: 0.75rem;
+        .card-text p {
+          font-size: 0.8rem;
           font-weight: 600;
           color: var(--text-muted);
         }
 
-        .card-front-name {
-          font-size: 1.15rem;
-          font-weight: 800;
-          color: var(--navy-heading);
-          line-height: 1.2;
-        }
-
-        .card-front-role {
-          font-size: 0.8rem;
-          font-weight: 700;
-          color: var(--primary-blue);
-          margin-bottom: 8px;
-        }
-
-        .card-front-icons {
-          display: flex;
-          gap: 6px;
-        }
-
-        .mini-icon-circle {
-          width: 14px;
-          height: 14px;
-          border-radius: 50%;
-          background: #eff6ff;
-          border: 1px solid #bfdbfe;
-        }
-
-        /* Hover interaction for cards */
-        .hero-cards-column:hover .card-depth-1 {
-          transform: translateZ(20px) rotate(0deg);
+        /* Hover enhancement for active card */
+        .carousel-card.active-card:hover {
+          transform: scale(1.05) translateZ(20px) !important;
           box-shadow: -22px 35px 60px rgba(15, 23, 42, 0.16);
-        }
-
-        .hero-cards-column:hover .card-depth-2 {
-          transform: translateZ(-20px) rotate(-3deg);
-        }
-
-        .hero-cards-column:hover .card-depth-3 {
-          transform: translateZ(-50px) rotate(-6deg);
         }
 
         /* Responsive Breakpoints */

@@ -1,6 +1,6 @@
 # Subash S - Personal Portfolio Website
 
-A production-quality personal portfolio website built with **React.js** and **Vite**, closely reproducing the visual design reference template (light blue & white corporate aesthetic, circular hero profile with concentric orbital rings, 3D floating preview cards, and the UX Case Study showcase).
+A production-quality personal portfolio website built with **React.js** and **Vite**, closely reproducing the visual design reference template (light blue & white corporate aesthetic, circular hero profile with concentric orbital rings, and 3D floating preview cards).
 
 The website strictly uses **Subash S's authentic profile photograph** without any modifications to his facial identity, hair, or features.
 
@@ -32,7 +32,6 @@ npm run build
 
 - **Reference-Fidelity Layout:** Exact left/center/right hero arrangement, blue-and-white color palette, circular profile frame with planetary orbit rings, and fanned-out 3D cards.
 - **Authentic Profile Photo:** Uses the user's uploaded photograph framed inside a circular glow container with depth separation and realistic soft shadows.
-- **Carex / UX Case Study Template Section:** Recreates the second section from the reference design with 4 fanned perspective document boards and 6 capability badges.
 - **Desktop 3D Mouse Parallax & Tilt:** Subtle, smooth mouse-following depth on hero elements, background circles, and floating project cards using `requestAnimationFrame`.
 - **Custom Mouse Cursor:** Clean inner dot and delayed outer ring with interactive expansion over clickable elements (automatically disabled on mobile/touch screens and `prefers-reduced-motion`).
 - **Interactive Modals:**
