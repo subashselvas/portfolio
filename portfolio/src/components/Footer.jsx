@@ -38,7 +38,7 @@ export default function Footer() {
             <h4 className="footer-links-title">Connect</h4>
             <div className="footer-social-icons">
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/subash-s-baba68293"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-icon-btn"
@@ -47,7 +47,7 @@ export default function Footer() {
                 <LinkedInIcon size={18} />
               </a>
               <a
-                href="https://github.com"
+                href="https://github.com/subashselvas"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-icon-btn"
@@ -74,7 +74,7 @@ export default function Footer() {
                 <InstagramIcon size={18} />
               </a>
               <a
-                href="mailto:contact@subash.dev"
+                href="mailto:subashselva2006@gmail.com"
                 className="footer-icon-btn"
                 aria-label="Email"
               >

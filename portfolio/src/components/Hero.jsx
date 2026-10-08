@@ -155,7 +155,7 @@ export default function Hero({ onOpenResume }) {
           {/* Social Links Row */}
           <div className="hero-socials-row">
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/subash-s-baba68293"
               target="_blank"
               rel="noopener noreferrer"
               className="social-icon-btn"
@@ -165,7 +165,7 @@ export default function Hero({ onOpenResume }) {
               <LinkedInIcon size={18} />
             </a>
             <a
-              href="https://github.com"
+              href="https://github.com/subashselvas"
               target="_blank"
               rel="noopener noreferrer"
               className="social-icon-btn"
@@ -195,7 +195,7 @@ export default function Hero({ onOpenResume }) {
               <InstagramIcon size={18} />
             </a>
             <a
-              href="mailto:contact@subash.dev"
+              href="mailto:subashselva2006@gmail.com"
               className="social-icon-btn"
               aria-label="Email Me"
               title="Email"
