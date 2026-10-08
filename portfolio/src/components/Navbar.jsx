@@ -10,7 +10,6 @@ export default function Navbar({ onOpenResume }) {
     { label: 'Home', href: '#home', id: 'home' },
     { label: 'About', href: '#about', id: 'about' },
     { label: 'Skills', href: '#skills', id: 'skills' },
-    { label: 'Services', href: '#services', id: 'services' },
     { label: 'Portfolio', href: '#portfolio', id: 'portfolio' },
     { label: 'Contact', href: '#contact', id: 'contact' },
   ];

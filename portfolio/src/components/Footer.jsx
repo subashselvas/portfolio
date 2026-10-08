@@ -29,7 +29,6 @@ export default function Footer() {
               <a href="#home" className="footer-link">Home</a>
               <a href="#about" className="footer-link">About Me</a>
               <a href="#skills" className="footer-link">Skills</a>
-              <a href="#services" className="footer-link">Services</a>
               <a href="#portfolio" className="footer-link">Portfolio</a>
               <a href="#contact" className="footer-link">Contact</a>
             </div>
