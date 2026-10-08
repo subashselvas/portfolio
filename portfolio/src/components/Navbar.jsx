@@ -87,7 +87,7 @@ export default function Navbar({ onOpenResume }) {
           {/* Desktop Navigation Links */}
           <nav className="desktop-nav" aria-label="Main Navigation">
             <ul className="nav-list" ref={navListRef}>
-              <div className="sliding-pill" style={{ left: indicatorStyle.left, width: indicatorStyle.width, opacity: indicatorStyle.opacity }} />
+              
               {navItems.map((item) => {
                 const isActive = activeSection === item.id;
                 return (
@@ -262,17 +262,6 @@ export default function Navbar({ onOpenResume }) {
         .nav-link.active {
           color: var(--primary-blue);
           font-weight: 600;
-        }
-
-        .sliding-pill {
-          position: absolute;
-          bottom: 0px;
-          height: 2.5px;
-          background: var(--primary-blue);
-          border-radius: 99px;
-          transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-          pointer-events: none;
-          z-index: 10;
         }
 
         .navbar-action {
