@@ -115,7 +115,7 @@ export default function Hero({ onOpenResume }) {
               {/* User's ACTUAL photo */}
               <img
                 src={subashPortrait}
-                alt="Subash S - Software Developer"
+                alt="SUBASH S - Software Developer"
                 className="profile-real-image"
                 loading="eager"
               />
@@ -138,7 +138,7 @@ export default function Hero({ onOpenResume }) {
             <span>Hello, I'm</span>
           </div>
 
-          <h1 className="hero-name">Subash S</h1>
+          <h1 className="hero-name">SUBASH S</h1>
 
           <div className="hero-role-wrapper">
             <span className="hero-role-prefix">And I'm a </span>
@@ -271,7 +271,7 @@ export default function Hero({ onOpenResume }) {
                           <img src={subashPortrait} alt="Subash" className="card-avatar" />
                         </div>
                         <div className="card-text">
-                           <h4>Subash S</h4>
+                           <h4>SUBASH S</h4>
                            <p>{card.subtitle}</p>
                         </div>
                      </div>

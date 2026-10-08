@@ -18,7 +18,7 @@ export default function Footer() {
               Port<span className="logo-accent">folio</span>
             </span>
             <p className="footer-brand-desc">
-              Personal portfolio of <strong>Subash S</strong>, Software Developer & Cyber Security
+              Personal portfolio of <strong>SUBASH S</strong>, Software Developer & Cyber Security
               Student at Karpagam Academy of Higher Education, Coimbatore.
             </p>
           </div>
@@ -86,7 +86,7 @@ export default function Footer() {
 
         <div className="footer-bottom-row">
           <p className="footer-copy">
-            &copy; {new Date().getFullYear()} Subash S. Built with React & Vite. All rights reserved.
+            &copy; {new Date().getFullYear()} SUBASH S. Built with React & Vite. All rights reserved.
           </p>
 
           <button

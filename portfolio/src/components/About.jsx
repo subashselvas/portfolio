@@ -30,7 +30,7 @@ export default function About({ onOpenResume }) {
             <div className="about-image-wrapper">
               <img
                 src={subashFull}
-                alt="Subash S - Software Developer"
+                alt="SUBASH S - Software Developer"
                 className="about-image"
                 loading="lazy"
               />

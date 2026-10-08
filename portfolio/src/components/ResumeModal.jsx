@@ -43,7 +43,7 @@ export default function ResumeModal({ isOpen, onClose }) {
           {/* Header */}
           <div className="resume-doc-header">
             <div>
-              <h1 id="resume-title" className="resume-name">Subash S</h1>
+              <h1 id="resume-title" className="resume-name">SUBASH S</h1>
               <h2 className="resume-role">Software Developer | Cyber Security Enthusiast</h2>
               <p className="resume-location">Coimbatore, Tamil Nadu, India</p>
             </div>
