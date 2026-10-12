@@ -1,5 +1,5 @@
 import { ArrowUp } from 'lucide-react';
-import { LinkedInIcon, GitHubIcon, TwitterIcon, InstagramIcon, MailIcon } from './Icons';
+import { LinkedInIcon, GitHubIcon, TwitterIcon, InstagramIcon, MailIcon, PhoneIcon } from './Icons';
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -18,8 +18,8 @@ export default function Footer() {
               Port<span className="logo-accent">folio</span>
             </span>
             <p className="footer-brand-desc">
-              Personal portfolio of <strong>SUBASH S</strong>, Software Developer & Cyber Security
-              Student at Karpagam Academy of Higher Education, Coimbatore.
+              Personal portfolio of <strong>SUBASH S</strong>, Computer Science & Engineering
+              Undergraduate at Karpagam Academy of Higher Education, Coimbatore.
             </p>
           </div>
 
@@ -28,8 +28,10 @@ export default function Footer() {
             <div className="footer-nav-grid">
               <a href="#home" className="footer-link">Home</a>
               <a href="#about" className="footer-link">About Me</a>
+              <a href="#experience" className="footer-link">Experience</a>
               <a href="#skills" className="footer-link">Skills</a>
-              <a href="#portfolio" className="footer-link">Portfolio</a>
+              <a href="#portfolio" className="footer-link">Projects</a>
+              <a href="#certifications" className="footer-link">Certifications</a>
               <a href="#contact" className="footer-link">Contact</a>
             </div>
           </div>
@@ -38,47 +40,40 @@ export default function Footer() {
             <h4 className="footer-links-title">Connect</h4>
             <div className="footer-social-icons">
               <a
-                href="https://www.linkedin.com/in/subash-s-baba68293"
+                href="https://www.linkedin.com/in/Subashselva06"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-icon-btn"
                 aria-label="LinkedIn"
+                title="LinkedIn: Subashselva06"
               >
                 <LinkedInIcon size={18} />
               </a>
               <a
-                href="https://github.com/subashselvas"
+                href="https://github.com/Subashgithub06"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-icon-btn"
                 aria-label="GitHub"
+                title="GitHub: Subashgithub06"
               >
                 <GitHubIcon size={18} />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-icon-btn"
-                aria-label="Twitter"
-              >
-                <TwitterIcon size={18} />
-              </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-icon-btn"
-                aria-label="Instagram"
-              >
-                <InstagramIcon size={18} />
               </a>
               <a
                 href="mailto:subashselva2006@gmail.com"
                 className="footer-icon-btn"
                 aria-label="Email"
+                title="Email: subashselva2006@gmail.com"
               >
                 <MailIcon size={18} />
+              </a>
+              <a
+                href="tel:+919345887855"
+                className="footer-icon-btn"
+                aria-label="Phone"
+                title="Phone: +91 9345887855"
+              >
+                <PhoneIcon size={18} />
               </a>
             </div>
           </div>

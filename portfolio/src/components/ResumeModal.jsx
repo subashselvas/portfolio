@@ -1,10 +1,101 @@
-import { X, Printer, Download, GraduationCap, Code, Briefcase, Award } from 'lucide-react';
+import { X, Printer, Download, GraduationCap, Code, Briefcase, Award, CheckCircle2, UserCheck, Layers, FileDown } from 'lucide-react';
+import { GitHubIcon, LinkedInIcon, MailIcon, PhoneIcon } from './Icons';
 
 export default function ResumeModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleDownloadFile = () => {
+    const resumeText = `SUBASH S
+GitHub: https://github.com/Subashgithub06 | LinkedIn: https://www.linkedin.com/in/Subashselva06
+Email: subashselva2006@gmail.com | Phone: +91 9345887855
+Location: Coimbatore, Tamil Nadu, India
+
+================================================================================
+CAREER OBJECTIVE
+================================================================================
+Seeking a career opportunity where my acquired skills and experience can be put
+to the best use, allowing me to contribute to the growth of the organization
+while also encouraging me to grow professionally and reach my full potential.
+
+================================================================================
+EDUCATION
+================================================================================
+Karpagam Academy of Higher Education                                 2023 - 2027
+Bachelor of Engineering in Computer Science and Engineering          CGPA - 8.1*
+
+================================================================================
+INTERNSHIPS
+================================================================================
+Python Full Stack Development Internship - Pantech            Apr 2024 - Jun 2024
+• Developed web applications using Python and gained experience in building dynamic,
+  user-focused application features.
+• Worked with backend logic, database connectivity, and frontend integration while
+  applying Python programming concepts to practical development tasks.
+
+UI/UX Designer Internship - Gateway Software Solutions        May 2025 - Jun 2025
+• Designed simple and user-friendly website interfaces by working on page layouts,
+  colours, fonts, and visual design elements to improve user experience.
+• Applied UI/UX design principles to create clean, attractive, and easy-to-use
+  interfaces while gaining practical knowledge of real-world design practices.
+
+================================================================================
+PROJECTS
+================================================================================
+AI SaaS Platform (MERN Stack Project)
+• Developed a scalable AI-powered SaaS application using the MERN stack,
+  integrating features like text generation and image editing with seamless
+  frontend-backend communication via RESTful APIs.
+• Implemented secure authentication and role-based access control, enabling
+  differentiated features for free and premium users while ensuring data protection
+  and efficient request handling.
+• Optimized performance and user experience with a responsive UI, and deployed
+  the application on cloud infrastructure with reliable database integration for
+  scalability and availability.
+• Tech Stack: MongoDB, Express.js, React, Node.js, RESTful APIs, JWT Auth, Cloud
+
+AI-Powered Student Performance Prediction System (LLM / AI Project)
+• Developed an AI-powered student performance management system using Python and
+  Flask, integrating intelligent features for academic analysis, grade prediction,
+  and attendance monitoring.
+• Implemented AI-driven grade prediction, dropout risk detection, and personalized
+  study recommendations to identify at-risk students and support data-driven
+  academic decision-making.
+• Designed role-based dashboards for students, faculty, and administrators,
+  enabling efficient student data management, attendance tracking, and
+  visualization of AI-generated academic insights.
+• Tech Stack: Python, Flask, Machine Learning, LLM, MySQL, Data Visualization
+
+================================================================================
+TECHNICAL SKILLS
+================================================================================
+Languages: Python, Java, SQL
+Database: MySQL, MongoDB
+Web Development: HTML, CSS, JavaScript, MERN Stack
+Tools: Git, GitHub, VS Code
+Soft Skills: Time management, Adaptability, Communication
+
+================================================================================
+CERTIFICATIONS
+================================================================================
+• Python Web Development: Infosys
+• CyberSecurity: Cisco Networking Academy
+• CSS HTML Certification: HackerRank
+• Google Cloud Launchpad: Google Cloud
+`;
+
+    const blob = new Blob([resumeText], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'Subash_S_Resume.txt';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -27,6 +118,14 @@ export default function ResumeModal({ isOpen, onClose }) {
               <Printer size={16} />
               <span>Print / Save as PDF</span>
             </button>
+            <button
+              type="button"
+              className="btn-secondary resume-top-btn"
+              onClick={handleDownloadFile}
+            >
+              <FileDown size={16} />
+              <span>Download Text Resume</span>
+            </button>
           </div>
           <button
             type="button"
@@ -42,114 +141,198 @@ export default function ResumeModal({ isOpen, onClose }) {
         <div className="resume-sheet" id="printable-resume">
           {/* Header */}
           <div className="resume-doc-header">
-            <div>
+            <div className="header-info-main">
               <h1 id="resume-title" className="resume-name">SUBASH S</h1>
-              <h2 className="resume-role">Software Developer | Cyber Security Enthusiast</h2>
-              <p className="resume-location">Coimbatore, Tamil Nadu, India</p>
+              <div className="resume-contact-bar">
+                <a href="https://github.com/Subashgithub06" target="_blank" rel="noopener noreferrer">
+                  <GitHubIcon size={14} />
+                  <span>Subashgithub06</span>
+                </a>
+                <span className="contact-sep">|</span>
+                <a href="https://www.linkedin.com/in/Subashselva06" target="_blank" rel="noopener noreferrer">
+                  <LinkedInIcon size={14} />
+                  <span>Subashselva06</span>
+                </a>
+                <span className="contact-sep">|</span>
+                <a href="mailto:subashselva2006@gmail.com">
+                  <MailIcon size={14} />
+                  <span>subashselva2006@gmail.com</span>
+                </a>
+                <span className="contact-sep">|</span>
+                <a href="tel:+919345887855">
+                  <PhoneIcon size={14} />
+                  <span>+91 9345887855</span>
+                </a>
+              </div>
             </div>
             <div className="resume-status-badge">
-              <span>B.E. 4th Year</span>
-              <strong>CGPA: 8.1</strong>
+              <span>B.E. 2023 - 2027</span>
+              <strong>CGPA - 8.1*</strong>
             </div>
           </div>
 
           <hr className="resume-divider" />
 
-          {/* Education */}
+          {/* CAREER OBJECTIVE */}
+          <section className="resume-section">
+            <h3 className="resume-sec-title">
+              <UserCheck size={18} className="text-blue" />
+              <span>CAREER OBJECTIVE</span>
+            </h3>
+            <p className="entry-desc italic-objective">
+              Seeking a career opportunity where my acquired skills and experience can be put to the best use,
+              allowing me to contribute to the growth of the organization while also encouraging me to grow
+              professionally and reach my full potential.
+            </p>
+          </section>
+
+          {/* EDUCATION */}
           <section className="resume-section">
             <h3 className="resume-sec-title">
               <GraduationCap size={18} className="text-blue" />
-              <span>Education</span>
+              <span>EDUCATION</span>
             </h3>
             <div className="resume-entry">
               <div className="entry-head">
-                <strong>Bachelor of Engineering (B.E.) in Computer Science and Cyber Security</strong>
-                <span className="entry-date">2023 - Present (4th Year)</span>
+                <strong>Karpagam Academy of Higher Education</strong>
+                <span className="entry-date">2023 - 2027</span>
               </div>
-              <div className="entry-sub">Karpagam Academy of Higher Education, Coimbatore</div>
-              <div className="entry-grade">Cumulative Grade Point Average (CGPA): <strong>8.1 / 10.0</strong></div>
+              <div className="entry-sub">Bachelor of Engineering in Computer Science and Engineering</div>
+              <div className="entry-grade">Cumulative Grade Point Average: <strong>CGPA - 8.1*</strong></div>
             </div>
           </section>
 
-          {/* Technical Skills */}
-          <section className="resume-section">
-            <h3 className="resume-sec-title">
-              <Code size={18} className="text-blue" />
-              <span>Technical Skills</span>
-            </h3>
-            <div className="resume-skills-grid">
-              <div>
-                <strong>Programming Languages:</strong> Java, Python, C, C++
-              </div>
-              <div>
-                <strong>Web Development:</strong> HTML5, CSS3, JavaScript (ES6+), React.js
-              </div>
-              <div>
-                <strong>Databases:</strong> SQL, MySQL
-              </div>
-              <div>
-                <strong>Cyber Security:</strong> Cyber Security Fundamentals, Network Security, Secure Coding, OWASP
-              </div>
-              <div>
-                <strong>Developer Tools:</strong> Git, GitHub, VS Code, Linux CLI
-              </div>
-            </div>
-          </section>
-
-          {/* Featured Projects */}
+          {/* INTERNSHIP */}
           <section className="resume-section">
             <h3 className="resume-sec-title">
               <Briefcase size={18} className="text-blue" />
-              <span>Academic & Technical Projects</span>
+              <span>INTERNSHIP</span>
             </h3>
 
+            {/* Pantech Internship */}
             <div className="resume-entry">
               <div className="entry-head">
-                <strong>Smart Greenhouse Automation</strong>
-                <span className="entry-date">IoT & Full Stack</span>
+                <strong>Python Full Stack Development Internship − Pantech</strong>
+                <span className="entry-date">Apr 2024 – Jun 2024</span>
               </div>
-              <div className="entry-tech">Tech Stack: HTML, CSS, JavaScript, Python</div>
-              <p className="entry-desc">
-                Engineered an IoT micro-climate monitoring and automated irrigation platform tracking
-                soil moisture, humidity, and temperature via real-time WebSocket telemetry.
-              </p>
+              <ul className="resume-bullet-list">
+                <li>
+                  Developed web applications using Python and gained experience in building dynamic, user-focused application features.
+                </li>
+                <li>
+                  Worked with backend logic, database connectivity, and frontend integration while applying Python programming concepts to practical development tasks.
+                </li>
+              </ul>
             </div>
 
+            {/* Gateway Software Solutions Internship */}
             <div className="resume-entry">
               <div className="entry-head">
-                <strong>AI Seasonal Crop Planner</strong>
-                <span className="entry-date">ML & SQL</span>
+                <strong>UI/UX Designer Internship − Gateway Software Solutions</strong>
+                <span className="entry-date">May 2025 – Jun 2025</span>
               </div>
-              <div className="entry-tech">Tech Stack: Python, Machine Learning, SQL</div>
-              <p className="entry-desc">
-                Developed a predictive agrarian planning application that forecasts optimum crop selection
-                and planting cycles based on regional soil datasets and historical climate patterns.
-              </p>
-            </div>
-
-            <div className="resume-entry">
-              <div className="entry-head">
-                <strong>API Security Testing Framework</strong>
-                <span className="entry-date">Cyber Security</span>
-              </div>
-              <div className="entry-tech">Tech Stack: Python, API Security, SQL, OWASP</div>
-              <p className="entry-desc">
-                Built an automated vulnerability scanner targeting REST API endpoints for authentication
-                bypass, broken object level authorization (BOLA), and SQL injection weaknesses.
-              </p>
+              <ul className="resume-bullet-list">
+                <li>
+                  Designed simple and user-friendly website interfaces by working on page layouts, colours, fonts, and visual design elements to improve user experience.
+                </li>
+                <li>
+                  Applied UI/UX design principles to create clean, attractive, and easy-to-use interfaces while gaining practical knowledge of real-world design practices.
+                </li>
+              </ul>
             </div>
           </section>
 
-          {/* Core Strengths */}
+          {/* PROJECTS */}
+          <section className="resume-section">
+            <h3 className="resume-sec-title">
+              <Layers size={18} className="text-blue" />
+              <span>PROJECTS</span>
+            </h3>
+
+            {/* AI SaaS Platform */}
+            <div className="resume-entry">
+              <div className="entry-head">
+                <strong>AI SaaS Platform (MERN Stack Project)</strong>
+                <span className="entry-date">MERN & Cloud</span>
+              </div>
+              <ul className="resume-bullet-list">
+                <li>
+                  Developed a scalable AI-powered SaaS application using the MERN stack, integrating features like text generation and image editing with seamless frontend–backend communication via RESTful APIs.
+                </li>
+                <li>
+                  Implemented secure authentication and role-based access control, enabling differentiated features for free and premium users while ensuring data protection and efficient request handling.
+                </li>
+                <li>
+                  Optimized performance and user experience with a responsive UI, and deployed the application on cloud infrastructure with reliable database integration for scalability and availability.
+                </li>
+              </ul>
+            </div>
+
+            {/* AI-Powered Student Performance Prediction System */}
+            <div className="resume-entry">
+              <div className="entry-head">
+                <strong>AI-Powered Student Performance Prediction System (LLM / AI Project)</strong>
+                <span className="entry-date">Python, Flask & ML</span>
+              </div>
+              <ul className="resume-bullet-list">
+                <li>
+                  Developed an AI-powered student performance management system using Python and Flask, integrating intelligent features for academic analysis, grade prediction, and attendance monitoring.
+                </li>
+                <li>
+                  Implemented AI-driven grade prediction, dropout risk detection, and personalized study recommendations to identify at-risk students and support data-driven academic decision-making.
+                </li>
+                <li>
+                  Designed role-based dashboards for students, faculty, and administrators, enabling efficient student data management, attendance tracking, and visualization of AI-generated academic insights.
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          {/* TECHNICAL SKILLS */}
+          <section className="resume-section">
+            <h3 className="resume-sec-title">
+              <Code size={18} className="text-blue" />
+              <span>TECHNICAL SKILLS</span>
+            </h3>
+            <div className="resume-skills-block">
+              <div className="skill-line">
+                <strong>Languages:</strong> Python, Java, SQL.
+              </div>
+              <div className="skill-line">
+                <strong>Database:</strong> MySQL, MongoDB.
+              </div>
+              <div className="skill-line">
+                <strong>Web Development:</strong> HTML, CSS, JavaScript, MERN Stack.
+              </div>
+              <div className="skill-line">
+                <strong>Tools:</strong> Git, GitHub, VS Code.
+              </div>
+              <div className="skill-line">
+                <strong>Soft Skills:</strong> Time management, Adaptability, Communication.
+              </div>
+            </div>
+          </section>
+
+          {/* CERTIFICATIONS */}
           <section className="resume-section">
             <h3 className="resume-sec-title">
               <Award size={18} className="text-blue" />
-              <span>Professional Strengths</span>
+              <span>CERTIFICATIONS</span>
             </h3>
-            <p className="entry-desc">
-              Strong grasp of Object-Oriented Programming, clean code architecture, defensive software
-              engineering, collaborative version control with Git, and continuous technical learning.
-            </p>
+            <ul className="resume-cert-list">
+              <li>
+                <strong>Python Web Development:</strong> Infosys
+              </li>
+              <li>
+                <strong>CyberSecurity:</strong> Cisco Networking Academy
+              </li>
+              <li>
+                <strong>CSS HTML Certification:</strong> HackerRank
+              </li>
+              <li>
+                <strong>Google Cloud Launchpad:</strong> Google Cloud
+              </li>
+            </ul>
           </section>
         </div>
       </div>
@@ -171,7 +354,7 @@ export default function ResumeModal({ isOpen, onClose }) {
           background: #ffffff;
           border-radius: var(--radius-xl);
           width: 100%;
-          max-width: 860px;
+          max-width: 900px;
           max-height: 92vh;
           overflow-y: auto;
           display: flex;
@@ -190,6 +373,11 @@ export default function ResumeModal({ isOpen, onClose }) {
           position: sticky;
           top: 0;
           z-index: 10;
+        }
+
+        .topbar-actions {
+          display: flex;
+          gap: 12px;
         }
 
         .resume-top-btn {
@@ -229,23 +417,38 @@ export default function ResumeModal({ isOpen, onClose }) {
           margin-bottom: 16px;
         }
 
+        .header-info-main {
+          display: flex;
+          flex-direction: column;
+        }
+
         .resume-name {
-          font-size: 2.2rem;
+          font-size: 2.3rem;
           font-weight: 800;
           color: var(--navy-heading);
-          margin-bottom: 4px;
+          margin-bottom: 6px;
+          letter-spacing: -0.02em;
         }
 
-        .resume-role {
-          font-size: 1.1rem;
+        .resume-contact-bar {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 10px;
+          font-size: 0.85rem;
+          color: var(--text-color);
+        }
+
+        .resume-contact-bar a {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
           color: var(--primary-blue);
-          font-weight: 700;
-          margin-bottom: 4px;
+          font-weight: 600;
         }
 
-        .resume-location {
-          font-size: 0.9rem;
-          color: var(--text-muted);
+        .contact-sep {
+          color: #cbd5e1;
         }
 
         .resume-status-badge {
@@ -271,24 +474,32 @@ export default function ResumeModal({ isOpen, onClose }) {
         .resume-divider {
           border: none;
           height: 2px;
-          background: #f1f5f9;
-          margin: 20px 0 28px;
+          background: #e2e8f0;
+          margin: 18px 0 24px;
         }
 
         .resume-section {
-          margin-bottom: 28px;
+          margin-bottom: 24px;
         }
 
         .resume-sec-title {
           display: flex;
           align-items: center;
           gap: 10px;
-          font-size: 1.15rem;
+          font-size: 1.1rem;
           font-weight: 800;
           color: var(--navy-heading);
-          margin-bottom: 14px;
-          padding-bottom: 6px;
+          margin-bottom: 12px;
+          padding-bottom: 4px;
           border-bottom: 1px solid #f1f5f9;
+          letter-spacing: 0.02em;
+        }
+
+        .italic-objective {
+          font-style: italic;
+          color: var(--text-color);
+          line-height: 1.6;
+          font-size: 0.95rem;
         }
 
         .resume-entry {
@@ -300,7 +511,7 @@ export default function ResumeModal({ isOpen, onClose }) {
           justify-content: space-between;
           font-size: 0.98rem;
           color: var(--navy-heading);
-          margin-bottom: 2px;
+          margin-bottom: 3px;
         }
 
         .entry-date {
@@ -313,7 +524,7 @@ export default function ResumeModal({ isOpen, onClose }) {
           font-size: 0.9rem;
           color: var(--primary-blue);
           font-weight: 600;
-          margin-bottom: 4px;
+          margin-bottom: 3px;
         }
 
         .entry-grade {
@@ -321,25 +532,50 @@ export default function ResumeModal({ isOpen, onClose }) {
           color: var(--text-color);
         }
 
-        .entry-tech {
-          font-size: 0.82rem;
-          color: var(--text-muted);
-          font-weight: 600;
-          margin-bottom: 4px;
+        .resume-bullet-list {
+          list-style-type: disc;
+          padding-left: 20px;
+          margin-top: 6px;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
         }
 
-        .entry-desc {
+        .resume-bullet-list li {
           font-size: 0.9rem;
           color: var(--text-color);
-          line-height: 1.6;
+          line-height: 1.55;
         }
 
-        .resume-skills-grid {
-          display: grid;
-          grid-template-columns: 1fr;
+        .resume-skills-block {
+          display: flex;
+          flex-direction: column;
           gap: 8px;
+          font-size: 0.92rem;
+          color: var(--text-color);
+        }
+
+        .skill-line strong {
+          color: var(--navy-heading);
+          font-weight: 700;
+          margin-right: 6px;
+        }
+
+        .resume-cert-list {
+          list-style: none;
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 10px;
+        }
+
+        .resume-cert-list li {
           font-size: 0.9rem;
           color: var(--text-color);
+        }
+
+        .resume-cert-list li strong {
+          color: var(--navy-heading);
+          font-weight: 700;
         }
 
         .text-blue {

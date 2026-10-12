@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { Download, ArrowRight } from 'lucide-react';
-import { LinkedInIcon, GitHubIcon, TwitterIcon, InstagramIcon, MailIcon } from './Icons';
+import { LinkedInIcon, GitHubIcon, MailIcon, PhoneIcon } from './Icons';
 import subashPortrait from '../assets/subash-portrait.jpg';
 
 export default function Hero({ onOpenResume }) {
-  const [roleText, setRoleText] = useState('Software Developer');
+  const [roleText, setRoleText] = useState('MERN Stack Developer');
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
   const [activeCard, setActiveCard] = useState(0);
   const heroRef = useRef(null);
@@ -19,7 +19,12 @@ export default function Hero({ onOpenResume }) {
 
   // Dynamic typing / switching roles
   useEffect(() => {
-    const roles = ['Software Developer', 'Cyber Security Enthusiast', 'Full-Stack Problem Solver'];
+    const roles = [
+      'MERN Stack Developer',
+      'AI & Machine Learning Specialist',
+      'Python Full Stack Developer',
+      'UI/UX Designer'
+    ];
     let roleIdx = 0;
     let charIdx = 0;
     let isDeleting = false;
@@ -147,60 +152,48 @@ export default function Hero({ onOpenResume }) {
           </div>
 
           <p className="hero-description">
-            Currently pursuing my 4th year in Computer Science and Cyber Security at Karpagam
-            Academy of Higher Education, Coimbatore, with a CGPA of 8.1. Passionate about software
-            development, problem solving, and building practical technology solutions.
+            Computer Science and Engineering undergraduate at Karpagam Academy of Higher Education,
+            Coimbatore (CGPA 8.1*). Specializing in MERN stack development, AI-powered predictive systems,
+            Python full-stack engineering, and human-centered UI/UX design.
           </p>
 
           {/* Social Links Row */}
           <div className="hero-socials-row">
             <a
-              href="https://www.linkedin.com/in/subash-s-baba68293"
+              href="https://www.linkedin.com/in/Subashselva06"
               target="_blank"
               rel="noopener noreferrer"
               className="social-icon-btn"
               aria-label="LinkedIn Profile"
-              title="LinkedIn"
+              title="LinkedIn: Subashselva06"
             >
               <LinkedInIcon size={18} />
             </a>
             <a
-              href="https://github.com/subashselvas"
+              href="https://github.com/Subashgithub06"
               target="_blank"
               rel="noopener noreferrer"
               className="social-icon-btn"
               aria-label="GitHub Profile"
-              title="GitHub"
+              title="GitHub: Subashgithub06"
             >
               <GitHubIcon size={18} />
-            </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-icon-btn"
-              aria-label="Twitter Profile"
-              title="Twitter"
-            >
-              <TwitterIcon size={18} />
-            </a>
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-icon-btn"
-              aria-label="Instagram Profile"
-              title="Instagram"
-            >
-              <InstagramIcon size={18} />
             </a>
             <a
               href="mailto:subashselva2006@gmail.com"
               className="social-icon-btn"
               aria-label="Email Me"
-              title="Email"
+              title="Email: subashselva2006@gmail.com"
             >
               <MailIcon size={18} />
+            </a>
+            <a
+              href="tel:+919345887855"
+              className="social-icon-btn"
+              aria-label="Call Me"
+              title="Phone: +91 9345887855"
+            >
+              <PhoneIcon size={18} />
             </a>
           </div>
 
@@ -233,11 +226,11 @@ export default function Hero({ onOpenResume }) {
         >
           <div className="carousel-3d-container">
             {[
-              { id: 'home', title: 'Home', subtitle: 'Software Developer' },
-              { id: 'about', title: 'About Me', subtitle: '4th Yr CS & Cyber Sec' },
-              { id: 'skills', title: 'Skills', subtitle: 'React, Java, Python' },
-              { id: 'portfolio', title: 'Portfolio', subtitle: '3D UI, Web, IoT' },
-              { id: 'contact', title: 'Contact', subtitle: 'Available for Hire' }
+              { id: 'saas', title: 'AI SaaS Platform', subtitle: 'MERN Stack & Cloud' },
+              { id: 'student', title: 'Student Prediction', subtitle: 'LLM & Machine Learning' },
+              { id: 'pantech', title: 'Python Full Stack', subtitle: 'Pantech Internship' },
+              { id: 'uiux', title: 'UI/UX Design', subtitle: 'Gateway Software Solns' },
+              { id: 'certs', title: 'Certifications', subtitle: 'Infosys, Cisco, GCP, HR' }
             ].map((card, idx) => {
               let offset = (idx - activeCard) % 5;
               if (offset < -2) offset += 5;

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Send, MapPin, GraduationCap, Clock, CheckCircle2, Mail, MessageSquare } from 'lucide-react';
+import { Send, MapPin, GraduationCap, CheckCircle2, Mail, Phone, AlertCircle } from 'lucide-react';
+import { LinkedInIcon, GitHubIcon } from './Icons';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -9,34 +10,84 @@ export default function Contact() {
     message: '',
   });
 
+  const [touched, setTouched] = useState({});
+  const [errors, setErrors] = useState({});
+
   const [status, setStatus] = useState({
     submitting: false,
     submitted: false,
     error: null,
   });
 
+  const validate = (data) => {
+    const errs = {};
+    if (!data.name.trim()) {
+      errs.name = 'Full Name is required.';
+    } else if (data.name.trim().length < 2) {
+      errs.name = 'Name must be at least 2 characters long.';
+    }
+
+    if (!data.email.trim()) {
+      errs.email = 'Email address is required.';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(data.email.trim())) {
+      errs.email = 'Please provide a valid email address (e.g., name@example.com).';
+    }
+
+    if (!data.subject.trim()) {
+      errs.subject = 'Subject is required.';
+    }
+
+    if (!data.message.trim()) {
+      errs.message = 'Message content is required.';
+    } else if (data.message.trim().length < 10) {
+      errs.message = 'Please provide a message with at least 10 characters.';
+    }
+
+    return errs;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const updated = { ...formData, [name]: value };
+    setFormData(updated);
+
+    if (touched[name]) {
+      const currentErrors = validate(updated);
+      setErrors(currentErrors);
+    }
+  };
+
+  const handleBlur = (e) => {
+    const { name } = e.target;
+    setTouched((prev) => ({ ...prev, [name]: true }));
+    const currentErrors = validate(formData);
+    setErrors(currentErrors);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) {
-      setStatus({ submitting: false, submitted: false, error: 'Please fill in all required fields.' });
+    setTouched({ name: true, email: true, subject: true, message: true });
+    const validationErrors = validate(formData);
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) {
+      setStatus({ submitting: false, submitted: false, error: 'Please correct the highlighted fields before sending.' });
       return;
     }
 
     setStatus({ submitting: true, submitted: false, error: null });
 
-    // Simulate sending message
+    // Realistic API submission simulation
     setTimeout(() => {
       setStatus({ submitting: false, submitted: true, error: null });
       setFormData({ name: '', email: '', subject: '', message: '' });
+      setTouched({});
+      setErrors({});
+
       setTimeout(() => {
         setStatus((s) => ({ ...s, submitted: false }));
-      }, 6000);
-    }, 1000);
+      }, 7000);
+    }, 1200);
   };
 
   return (
@@ -44,83 +95,113 @@ export default function Contact() {
       <div className="container">
         {/* Section Header */}
         <div className="section-header">
-          <span className="section-tag">Get in Touch</span>
+          <span className="section-tag">Direct Communication</span>
           <h2 className="section-title">
-            Let's Start a <span>Conversation</span>
+            Get in <span>Touch</span>
           </h2>
           <p className="section-subtitle">
-            Whether you have an upcoming project, an internship or full-time opportunity, or
-            simply want to talk software engineering and security, feel free to reach out.
+            Whether you have an upcoming full-stack development opportunity, wish to discuss AI & MERN
+            engineering, or want to review my credentials, feel free to reach out.
           </p>
         </div>
 
         <div className="contact-grid-layout">
           {/* Left Column: Direct Info Cards */}
           <div className="contact-info-cards">
-            <div className="contact-meta-card">
+            {/* Email Card */}
+            <a href="mailto:subashselva2006@gmail.com" className="contact-meta-card interactive-card">
+              <div className="meta-card-icon">
+                <Mail size={22} />
+              </div>
+              <div>
+                <h4 className="meta-card-title">Email Address</h4>
+                <p className="meta-card-desc">subashselva2006@gmail.com</p>
+                <span className="meta-sub">Click to send direct email</span>
+              </div>
+            </a>
+
+            {/* Phone Card */}
+            <a href="tel:+919345887855" className="contact-meta-card interactive-card">
+              <div className="meta-card-icon">
+                <Phone size={22} />
+              </div>
+              <div>
+                <h4 className="meta-card-title">Mobile Phone</h4>
+                <p className="meta-card-desc">+91 9345887855</p>
+                <span className="meta-sub">Available during working hours</span>
+              </div>
+            </a>
+
+            {/* Location Card */}
+            <div className="contact-meta-card interactive-card">
               <div className="meta-card-icon">
                 <MapPin size={22} />
               </div>
               <div>
                 <h4 className="meta-card-title">Location</h4>
                 <p className="meta-card-desc">Coimbatore, Tamil Nadu, India</p>
+                <span className="meta-sub">Open to on-site & remote roles</span>
               </div>
             </div>
 
-            <div className="contact-meta-card">
+            {/* Education Card */}
+            <div className="contact-meta-card interactive-card">
               <div className="meta-card-icon">
                 <GraduationCap size={22} />
               </div>
               <div>
-                <h4 className="meta-card-title">Education & Campus</h4>
+                <h4 className="meta-card-title">University Campus</h4>
                 <p className="meta-card-desc">Karpagam Academy of Higher Education</p>
-                <span className="meta-sub">4th Year B.E. CS & Cyber Security</span>
+                <span className="meta-sub">B.E. Computer Science and Engineering</span>
               </div>
             </div>
 
-            <div className="contact-meta-card">
-              <div className="meta-card-icon">
-                <Clock size={22} />
-              </div>
-              <div>
-                <h4 className="meta-card-title">Response Time</h4>
-                <p className="meta-card-desc">Typically within 24 hours</p>
-                <span className="meta-sub">Open to software developer roles</span>
-              </div>
-            </div>
-
-            {/* Note banner */}
-            <div className="contact-notice-box">
-              <div className="notice-icon">💬</div>
-              <p>
-                I actively review messages submitted through this portal. Looking forward to
-                connecting!
-              </p>
+            {/* Social links row */}
+            <div className="contact-social-row">
+              <a
+                href="https://github.com/Subashgithub06"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-btn-pill"
+              >
+                <GitHubIcon size={16} />
+                <span>Subashgithub06</span>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/Subashselva06"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-btn-pill"
+              >
+                <LinkedInIcon size={16} />
+                <span>Subashselva06</span>
+              </a>
             </div>
           </div>
 
           {/* Right Column: Clean Modern Form */}
           <div className="contact-form-wrapper interactive-card">
             <h3 className="form-card-title">Send a Direct Message</h3>
-            <p className="form-card-subtitle">Fill in the form below and I'll get back to you promptly.</p>
+            <p className="form-card-subtitle">Fill in the validated form below and I'll get back to you promptly.</p>
 
             {status.submitted && (
               <div className="alert-success">
-                <CheckCircle2 size={20} className="text-green flex-shrink-0" />
+                <CheckCircle2 size={22} className="text-green flex-shrink-0" />
                 <div>
-                  <strong>Thank you for reaching out!</strong>
-                  <p>Your message has been recorded successfully. I will get back to you soon.</p>
+                  <strong>Message Sent Successfully!</strong>
+                  <p>Thank you for reaching out. Your message has been received, and I will reply to you shortly.</p>
                 </div>
               </div>
             )}
 
             {status.error && (
               <div className="alert-error">
+                <AlertCircle size={18} className="flex-shrink-0" />
                 <span>{status.error}</span>
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="contact-actual-form">
+            <form onSubmit={handleSubmit} className="contact-actual-form" noValidate>
               <div className="form-row-2">
                 <div className="form-group">
                   <label htmlFor="name" className="form-label">
@@ -132,10 +213,14 @@ export default function Contact() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="e.g. Alex Henderson"
+                    onBlur={handleBlur}
+                    placeholder="e.g. Subash Selva"
                     required
-                    className="form-input"
+                    className={`form-input ${touched.name && errors.name ? 'input-error' : ''}`}
                   />
+                  {touched.name && errors.name && (
+                    <span className="field-error-text">{errors.name}</span>
+                  )}
                 </div>
 
                 <div className="form-group">
@@ -148,16 +233,20 @@ export default function Contact() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="e.g. alex@example.com"
+                    onBlur={handleBlur}
+                    placeholder="e.g. subash@example.com"
                     required
-                    className="form-input"
+                    className={`form-input ${touched.email && errors.email ? 'input-error' : ''}`}
                   />
+                  {touched.email && errors.email && (
+                    <span className="field-error-text">{errors.email}</span>
+                  )}
                 </div>
               </div>
 
               <div className="form-group">
                 <label htmlFor="subject" className="form-label">
-                  Subject
+                  Subject <span className="req">*</span>
                 </label>
                 <input
                   type="text"
@@ -165,9 +254,14 @@ export default function Contact() {
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  placeholder="e.g. Opportunity Discussion / Project Collaboration"
-                  className="form-input"
+                  onBlur={handleBlur}
+                  placeholder="e.g. Full-Stack Developer Opportunity / Project Inquiry"
+                  required
+                  className={`form-input ${touched.subject && errors.subject ? 'input-error' : ''}`}
                 />
+                {touched.subject && errors.subject && (
+                  <span className="field-error-text">{errors.subject}</span>
+                )}
               </div>
 
               <div className="form-group">
@@ -180,10 +274,14 @@ export default function Contact() {
                   rows="5"
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder="Share details about your query or opportunity..."
+                  onBlur={handleBlur}
+                  placeholder="Share details regarding your requirements, timelines, or role description..."
                   required
-                  className="form-textarea"
+                  className={`form-textarea ${touched.message && errors.message ? 'input-error' : ''}`}
                 />
+                {touched.message && errors.message && (
+                  <span className="field-error-text">{errors.message}</span>
+                )}
               </div>
 
               <button
@@ -191,7 +289,7 @@ export default function Contact() {
                 disabled={status.submitting}
                 className="btn-primary form-submit-btn"
               >
-                <span>{status.submitting ? 'Sending Message...' : 'Send Message'}</span>
+                <span>{status.submitting ? 'Transmitting Message...' : 'Send Message'}</span>
                 <Send size={16} />
               </button>
             </form>
@@ -206,7 +304,7 @@ export default function Contact() {
 
         .contact-grid-layout {
           display: grid;
-          grid-template-columns: 380px 1fr;
+          grid-template-columns: 390px 1fr;
           gap: 48px;
           align-items: start;
         }
@@ -214,29 +312,32 @@ export default function Contact() {
         .contact-info-cards {
           display: flex;
           flex-direction: column;
-          gap: 20px;
+          gap: 18px;
         }
 
         .contact-meta-card {
           background: #f8fbff;
           border: 1px solid var(--border-blue);
-          border-radius: var(--radius-md);
+          border-radius: var(--radius-lg);
           padding: 22px;
           display: flex;
           align-items: flex-start;
           gap: 16px;
-          transition: transform 0.25s ease, border-color 0.25s ease;
+          text-decoration: none;
+          color: inherit;
+          transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
         }
 
         .contact-meta-card:hover {
-          transform: translateX(4px);
+          transform: translateY(-3px);
           border-color: var(--primary-blue);
+          box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.12);
         }
 
         .meta-card-icon {
-          width: 44px;
-          height: 44px;
-          border-radius: 50%;
+          width: 46px;
+          height: 46px;
+          border-radius: var(--radius-md);
           background: #eff6ff;
           border: 1px solid #bfdbfe;
           color: var(--primary-blue);
@@ -254,45 +355,51 @@ export default function Contact() {
         }
 
         .meta-card-desc {
-          font-size: 0.9rem;
+          font-size: 0.92rem;
           color: var(--text-color);
-          font-weight: 500;
+          font-weight: 600;
         }
 
         .meta-sub {
           font-size: 0.78rem;
           color: var(--text-muted);
           display: block;
-          margin-top: 2px;
+          margin-top: 3px;
         }
 
-        .contact-notice-box {
-          background: #eff6ff;
-          border: 1px dashed var(--primary-border);
-          border-radius: var(--radius-md);
-          padding: 18px;
+        .contact-social-row {
           display: flex;
           gap: 12px;
+          margin-top: 6px;
+        }
+
+        .social-btn-pill {
+          display: inline-flex;
           align-items: center;
+          gap: 8px;
+          padding: 10px 18px;
+          border-radius: var(--radius-full);
+          background: #eff6ff;
+          border: 1px solid #bfdbfe;
+          color: var(--primary-blue);
+          font-size: 0.82rem;
+          font-weight: 700;
+          transition: all 0.2s;
         }
 
-        .notice-icon {
-          font-size: 1.4rem;
-        }
-
-        .contact-notice-box p {
-          font-size: 0.85rem;
-          color: var(--text-color);
-          line-height: 1.5;
+        .social-btn-pill:hover {
+          background: var(--primary-blue);
+          color: #ffffff;
+          transform: translateY(-2px);
         }
 
         /* Form Card */
         .contact-form-wrapper {
           background: #ffffff;
-          padding: 38px;
+          padding: 40px;
           border-radius: var(--radius-xl);
-          border: 1px solid var(--border-subtle);
-          box-shadow: var(--shadow-md);
+          border: 1px solid var(--border-blue);
+          box-shadow: 0 15px 35px -5px rgba(15, 23, 42, 0.06);
         }
 
         .form-card-title {
@@ -316,7 +423,7 @@ export default function Contact() {
           background: #f0fdf4;
           border: 1px solid #bbf7d0;
           color: #166534;
-          padding: 16px;
+          padding: 18px;
           border-radius: var(--radius-md);
           margin-bottom: 24px;
           font-size: 0.9rem;
@@ -325,9 +432,13 @@ export default function Contact() {
         .alert-success strong {
           display: block;
           font-weight: 700;
+          margin-bottom: 2px;
         }
 
         .alert-error {
+          display: flex;
+          align-items: center;
+          gap: 10px;
           background: #fef2f2;
           border: 1px solid #fecaca;
           color: #991b1b;
@@ -335,6 +446,7 @@ export default function Contact() {
           border-radius: var(--radius-md);
           margin-bottom: 20px;
           font-size: 0.88rem;
+          font-weight: 600;
         }
 
         .contact-actual-form {
@@ -384,6 +496,17 @@ export default function Contact() {
           box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
         }
 
+        .input-error {
+          border-color: #ef4444 !important;
+          background: #fff5f5 !important;
+        }
+
+        .field-error-text {
+          font-size: 0.78rem;
+          color: #dc2626;
+          font-weight: 600;
+        }
+
         .form-textarea {
           resize: vertical;
           min-height: 120px;
@@ -393,6 +516,14 @@ export default function Contact() {
           margin-top: 8px;
           align-self: flex-start;
           padding: 13px 32px;
+        }
+
+        .text-green {
+          color: #10b981;
+        }
+
+        .flex-shrink-0 {
+          flex-shrink: 0;
         }
 
         @media (max-width: 900px) {

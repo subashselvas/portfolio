@@ -1,18 +1,18 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Download, Menu, X } from 'lucide-react';
 
 export default function Navbar({ onOpenResume }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
-  const navListRef = useRef(null);
 
   const navItems = [
     { label: 'Home', href: '#home', id: 'home' },
     { label: 'About', href: '#about', id: 'about' },
+    { label: 'Experience', href: '#experience', id: 'experience' },
     { label: 'Skills', href: '#skills', id: 'skills' },
-    { label: 'Portfolio', href: '#portfolio', id: 'portfolio' },
+    { label: 'Projects', href: '#portfolio', id: 'portfolio' },
+    { label: 'Certifications', href: '#certifications', id: 'certifications' },
     { label: 'Contact', href: '#contact', id: 'contact' },
   ];
 
@@ -40,27 +40,6 @@ export default function Navbar({ onOpenResume }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    const updateIndicator = () => {
-      if (navListRef.current) {
-        const activeElement = navListRef.current.querySelector('.nav-link.active');
-        if (activeElement) {
-          // Calculate offset relative to the nav list
-          setIndicatorStyle({
-            left: activeElement.offsetLeft + 4, // to account for 4px padding in nav-link
-            width: activeElement.offsetWidth - 8,
-            opacity: 1,
-          });
-        }
-      }
-    };
-
-    // Small delay to ensure layout is computed
-    setTimeout(updateIndicator, 50);
-    window.addEventListener('resize', updateIndicator);
-    return () => window.removeEventListener('resize', updateIndicator);
-  }, [activeSection, isScrolled]);
-
   const handleNavClick = (e, href, id) => {
     e.preventDefault();
     setMobileMenuOpen(false);
@@ -86,7 +65,7 @@ export default function Navbar({ onOpenResume }) {
 
           {/* Desktop Navigation Links */}
           <nav className="desktop-nav" aria-label="Main Navigation">
-            <ul className="nav-list" ref={navListRef}>
+            <ul className="nav-list">
               
               {navItems.map((item) => {
                 const isActive = activeSection === item.id;
@@ -235,7 +214,7 @@ export default function Navbar({ onOpenResume }) {
           position: relative;
           display: flex;
           align-items: center;
-          gap: 32px;
+          gap: 18px;
           list-style: none;
         }
 
@@ -392,7 +371,7 @@ export default function Navbar({ onOpenResume }) {
           padding-top: 20px;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 1024px) {
           .desktop-nav {
             display: none;
           }

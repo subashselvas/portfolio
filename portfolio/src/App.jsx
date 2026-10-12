@@ -3,8 +3,10 @@ import CustomCursor from './components/CustomCursor';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
+import Experience from './components/Experience';
 import Skills from './components/Skills';
 import Portfolio from './components/Portfolio';
+import Certifications from './components/Certifications';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ProjectModal from './components/ProjectModal';
@@ -23,7 +25,7 @@ export default function App() {
 
   return (
     <div className="portfolio-app-root">
-      {/* Premium Desktop Custom Cursor */}
+      {/* Desktop Custom Cursor */}
       <CustomCursor />
 
       {/* Sticky Navigation Header */}
@@ -31,7 +33,7 @@ export default function App() {
 
       {/* Main Content Area */}
       <main id="main-content">
-        {/* Hero Section matching reference composition */}
+        {/* Hero Section */}
         <Hero onOpenResume={handleOpenResume} />
 
         {/* About Section */}
@@ -39,14 +41,24 @@ export default function App() {
           <About onOpenResume={handleOpenResume} />
         </ScrollReveal>
 
-        {/* Skills Section */}
+        {/* Experience Section (Internships) */}
+        <ScrollReveal>
+          <Experience />
+        </ScrollReveal>
+
+        {/* Skills Section (Technical & Soft Skills) */}
         <ScrollReveal>
           <Skills />
         </ScrollReveal>
 
-        {/* Portfolio Section */}
+        {/* Portfolio Section (Interactive Projects) */}
         <ScrollReveal>
           <Portfolio onOpenProject={handleOpenProject} />
+        </ScrollReveal>
+
+        {/* Certifications Section */}
+        <ScrollReveal>
+          <Certifications />
         </ScrollReveal>
 
         {/* Contact Section */}
@@ -58,7 +70,7 @@ export default function App() {
       {/* Footer */}
       <Footer />
 
-      {/* Project Detail Modal */}
+      {/* Project Detail Modal with Live Interactive Sandbox */}
       <ProjectModal
         project={selectedProject}
         onClose={handleCloseProject}
